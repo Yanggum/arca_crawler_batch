@@ -1,8 +1,8 @@
 package com.tia.arcacrawler.batch.domain.entity.config
 
-import CustomItemReader
-import com.tia.arcacrawler.batch.domain.entity.ArcaCralwerTest
-import com.tia.arcacrawler.batch.domain.repository.ArcaCralwerTestRepository
+import ArcaCrawlerTestReader
+import com.tia.arcacrawler.batch.domain.entity.ArcaCrawlerTest
+import com.tia.arcacrawler.batch.domain.repository.ArcaCrawlerTestRepository
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory
 import org.springframework.batch.core.configuration.annotation.StepScope
@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
 @Configuration
-class CustomReaderJobConfig(
+class ArcaCrawlerTestReaderJobConfig(
     private val jobBuilderFactory: JobBuilderFactory,
     private val stepBuilderFactory: StepBuilderFactory,
 
@@ -24,7 +24,7 @@ class CustomReaderJobConfig(
     private final val CHUNK_SIZE = 10
 
     @Autowired
-    private val arcaCralwerTestRepository: ArcaCralwerTestRepository? = null;
+    private val arcaCrawlerTestRepository: ArcaCrawlerTestRepository? = null;
 
     @Bean
     fun customReaderJob() = jobBuilderFactory.get(CUSTOM_READER_JOB)
@@ -33,29 +33,29 @@ class CustomReaderJobConfig(
 
     @Bean
     fun customReaderStep() = stepBuilderFactory.get(CUSTOM_READER_JOB_STEP)
-        .chunk<ArcaCralwerTest, ArcaCralwerTest>(CHUNK_SIZE)
+        .chunk<ArcaCrawlerTest, ArcaCrawlerTest>(CHUNK_SIZE)
         .reader(reader())
         .writer(writer())
         .build()
 
     @Bean
     @StepScope
-    fun reader(): CustomItemReader{
-        return CustomItemReader();
+    fun reader(): ArcaCrawlerTestReader{
+        return ArcaCrawlerTestReader();
     };
 
     @Bean
-    fun processor(): ItemProcessor<ArcaCralwerTest, ArcaCralwerTest> {
+    fun processor(): ItemProcessor<ArcaCrawlerTest, ArcaCrawlerTest> {
         return ItemProcessor { item ->
             item
         }
     };
 
     @Bean
-    fun writer(): ItemWriter<ArcaCralwerTest> {
+    fun writer(): ItemWriter<ArcaCrawlerTest> {
 
         return ItemWriter {
-            arcaCralwerTestRepository?.saveAll(it);
+            arcaCrawlerTestRepository?.saveAll(it);
         }
     }
 

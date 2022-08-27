@@ -4,8 +4,8 @@ import javax.persistence.*
 import java.io.Serializable;
 
 @Entity
-@Table(name = "arca_cralwer_test")
-open class ArcaCralwerTest : Serializable {
+@Table(name = "arca_crawler_test")
+open class ArcaCrawlerTest : Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "item_id", nullable = false)

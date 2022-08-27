@@ -1,6 +1,6 @@
 package com.tia.arcacrawler.batch.scheduler
 
-import com.tia.arcacrawler.batch.domain.entity.config.CustomReaderJobConfig
+import com.tia.arcacrawler.batch.domain.entity.config.ArcaCrawlerTestReaderJobConfig
 import org.apache.commons.logging.Log
 import org.apache.commons.logging.LogFactory
 import org.springframework.batch.core.JobParameter
@@ -14,11 +14,11 @@ import java.text.SimpleDateFormat
 import javax.batch.operations.JobExecutionAlreadyCompleteException
 
 @Component
-class SimpleJobScheduler(
+class ArcaCrawlerTestJobScheduler(
     val jobLauncher: JobLauncher,
-    val customReaderJobConfig: CustomReaderJobConfig
+    val arcaCrawlerTestReaderJobConfig: ArcaCrawlerTestReaderJobConfig
 ) {
-    private val logger: Log = LogFactory.getLog(SimpleJobScheduler::class.java);
+    private val logger: Log = LogFactory.getLog(ArcaCrawlerTestJobScheduler::class.java);
     private val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     @Scheduled(cron = "5 * * * * *")
@@ -28,7 +28,8 @@ class SimpleJobScheduler(
         val jobParameters = JobParameters(jobConf);
 
         try {
-            jobLauncher.run(customReaderJobConfig.customReaderJob(), jobParameters);
+            jobLauncher
+                .run(arcaCrawlerTestReaderJobConfig.customReaderJob(), jobParameters);
         }
         catch (e: JobExecutionAlreadyCompleteException){
             logger.info("Job is already running");
