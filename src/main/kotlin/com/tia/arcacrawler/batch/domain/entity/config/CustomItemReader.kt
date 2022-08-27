@@ -9,13 +9,15 @@ import org.springframework.batch.item.ItemReader
 
 open class CustomItemReader : ItemReader<ArcaCralwerTest> {
     @Autowired
-    private lateinit var bookRepository: ArcaCralwerTestRepository
+    private lateinit var arcaCralwerTestRepository: ArcaCralwerTestRepository
     private lateinit var list: MutableList<ArcaCralwerTest>
     private var nextIndex: Int = 0
 
+
+
     @PostConstruct
     fun postConstruct(){
-        list = bookRepository.findAll()  // book  조회, list에 담음
+        list = arcaCralwerTestRepository.findAll()  // book  조회, list에 담음
     }
 
     override fun read(): ArcaCralwerTest? {
